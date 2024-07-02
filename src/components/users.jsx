@@ -1,4 +1,5 @@
 import React from "react";
+import User from "./user";
 
 const Users = ({ data }) => {
   return (
@@ -6,14 +7,7 @@ const Users = ({ data }) => {
       <h2 className="text-2xl font-bold mb-4">User List</h2>
       <ul className="divide-y divide-gray-200">
         {data.map((user) => (
-          <li key={user.id} className="py-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-lg font-medium">{user.name}</h3>
-                <p className="text-sm text-gray-500">{user.email}</p>
-              </div>
-            </div>
-          </li>
+          <User key={user.id} user={user} />
         ))}
       </ul>
     </div>

@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Signup = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
   const navigate = useNavigate();
+
+  // Access the environment variables
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,7 +28,7 @@ const Signup = () => {
       return;
     }
     try {
-      await axios.post("http://localhost:3000/api/users", formData);
+      await axios.post(`${apiUrl}/api/users`, formData);
       alert("Registered successfully");
       setFormData({
         name: "",
@@ -111,4 +114,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignUp;

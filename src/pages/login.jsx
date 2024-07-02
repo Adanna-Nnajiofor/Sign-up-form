@@ -9,6 +9,9 @@ const Login = () => {
   });
   const navigate = useNavigate();
 
+  // Access the environment variables
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -24,13 +27,15 @@ const Login = () => {
       return;
     }
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/users/login",
-        formData
-      );
-      localStorage.setItem("userId", response.data.userId);
-      alert("Logged in successfully");
-      navigate("/homepage");
+      const response = await axios.post(`${apiUrl}/api/users/login`, formData);
+
+      if (response.data.length > 0 && response.data[0]._id) {
+        const userId = response.data[0]._id;
+        localStorage.setItem("userId", userId);
+        alert("Logged in successfully");
+        navigate("/homepage");
+        return;
+      }
     } catch (error) {
       console.error("Login error:", error);
       alert("Login failed. Please try again.");
